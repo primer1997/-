@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 8mm;
+  }
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  header,
+  nav,
+  .print\:hidden,
+  #whatsapp-summary-modal-backdrop {
+    display: none !important;
+  }
+  #printable-report {
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+  .print-avoid-break {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  table {
+    border-collapse: collapse !important;
+    width: 100% !important;
+  }
+  th,
+  td {
+    border: 1px solid #cbd5e1 !important;
+  }
+}
