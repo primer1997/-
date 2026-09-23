@@ -635,8 +635,7 @@ export const PatientEntryTab: React.FC<PatientEntryTabProps> = ({
                               className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-bold text-[#1a4a72] bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded transition-colors cursor-pointer"
                               title="माहिती एडिट करा"
                             >
-              <span aria-hidden="true" className="text-[11px] font-black leading-none">संपा.</span>
-              एडिट
+              नोंद संपादित करा
                             </button>
 
                             <button
