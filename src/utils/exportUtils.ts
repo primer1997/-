@@ -199,7 +199,7 @@ export function exportToExcel(
     ['महाराष्ट्र शासन - सार्वजनिक आरोग्य विभाग | उपकेंद्र मासिक प्रगती अहवाल', '', '', ''],
     [`उपकेंद्र मासिक एकात्मिक आरोग्य प्रगती अहवाल - माहे: ${config.reportingMonth}`, '', '', ''],
     [
-      `उपकेंद्र: ${config.subCentreName} | प्रा.आ.केंद्र: ${config.phcName} | तालुका: ${config.taluka} | जिल्हा: ${config.district} | अहवाल दिनांक: ${new Date().toLocaleDateString('mr-IN')}`,
+      `उपकेंद्र: ${config.subCentreName} | प्रा.आ.केंद्र: ${config.phcName} | तालुका: ${config.taluka} | जिल्हा: ${config.district} | अहवा�� दिनांक: ${new Date().toLocaleDateString('mr-IN')}`,
       '',
       '',
       '',
@@ -636,7 +636,7 @@ export function exportToExcel(
   XLSX.utils.book_append_sheet(wb, wsTb, '३_क्षयरुग्ण_लाईनलिस्ट');
 
   // =========================================================================
-  // Sheet 4: कुष्ठरुग्ण लाईनलिस्ट (Leprosy Linelist - NLEP)
+  // Sheet 4: कुष्ठरुग्ण ला���नलिस्ट (Leprosy Linelist - NLEP)
   // =========================================================================
   const leprosyHeaders = [
     'अ.क्र.',
@@ -839,7 +839,7 @@ export function exportToExcel(
 
   XLSX.utils.book_append_sheet(wb, wsCataract, '५_मोतीबिंदू_लाईनलिस्ट');
 
-  const deathHeaders = ['अ.क्र.', 'मृत्यू दिनांक', 'मृत व्यक्तीचे नाव', 'वय', 'लिंग', 'गाव / वस्ती', 'मृत्यू गावात/गावाबाहेर', 'मृत्यूचे ठिकाण', 'मृत्यूचे कारण', 'शेरा'];
+  const deathHeaders = ['अ.क्र.', 'मृत्यू दिना���क', 'मृत व्यक्तीचे नाव', 'वय', 'लिंग', 'गाव / वस्ती', 'मृत्यू गावात/गावाबाहेर', 'मृत्यूचे ठिकाण', 'मृत्यूचे कारण', 'शेरा'];
   const deathRows = deaths.map((record, index) => [index + 1, record.date, record.name, record.age, record.gender, record.village, record.place, record.deathPlace, record.cause, record.remarks || '']);
   const deathSheetData = [
     [`मृत्यू नोंदणी लाईनलिस्ट - ${config.reportingMonth}`, ...Array(deathHeaders.length - 1).fill('')],
@@ -876,6 +876,7 @@ export async function exportToPDF(
   tbPatients: TbPatientRecord[] = [],
   leprosyPatients: LeprosyPatientRecord[] = [],
   cataractPatients: CataractPatientRecord[] = [],
+  deaths: DeathRecord[] = [],
   elementId = 'printable-report'
 ): Promise<void> {
   const cleanSubCentre = config.subCentreName ? config.subCentreName.replace(/[\s/\\:]+/g, '_') : 'SubCentre';
@@ -1066,6 +1067,21 @@ export async function exportToPDF(
     });
   }
 
+  if (deaths.length > 0) {
+    const deathStartY = (doc as any).lastAutoTable?.finalY || 220;
+    doc.setFontSize(11);
+    doc.setTextColor(127, 29, 29);
+    doc.text('5. Death Registration Linelist', 14, deathStartY + 8);
+    autoTable(doc, {
+      startY: deathStartY + 11,
+      head: [['#', 'Date', 'Name', 'Age/G', 'Village', 'Place', 'Death Location', 'Cause']],
+      body: deaths.map((death, index) => [index + 1, death.date, death.name, `${death.age}/${death.gender[0]}`, death.village, death.place, death.deathPlace, death.cause]),
+      styles: { fontSize: 7 },
+      headStyles: { fillColor: [127, 29, 29] },
+      theme: 'grid',
+    });
+  }
+
   const finalY = (doc as any).lastAutoTable?.finalY || 250;
   if (finalY < 275) {
     doc.setFontSize(8);
@@ -1083,8 +1099,9 @@ export function generateWhatsAppSummary(
   patients: PatientRecord[],
   tbPatients: TbPatientRecord[] = [],
   leprosyPatients: LeprosyPatientRecord[] = [],
-  cataractPatients: CataractPatientRecord[] = []
-): string {
+  cataractPatients: CataractPatientRecord[] = [],
+  deaths: DeathRecord[] = []
+  ): string {
   const indices = calculateIndices(survey);
   const totalPatients = patients.length;
   const choleraCases = patients.filter((p) => p.suspectedDisease === 'कॉलरा').length;
@@ -1122,6 +1139,8 @@ export function generateWhatsAppSummary(
 - क्षयरुग्ण नोंदणी (TB Linelist): *${tbPatients.length} रुग्ण*
 - कुष्ठरुग्ण नोंदणी (Leprosy Linelist): *${leprosyPatients.length} रुग्ण*
 - मोतीबिंदू नोंदणी (Cataract Linelist): *${cataractPatients.length} रुग्ण*
+- मृत्यू नोंदणी (Death Linelist): *${deaths.length} नोंदी*
+${deaths.map((death, index) => `  ${index + 1}. ${death.date} - ${death.name}, ${death.place}, कारण: ${death.cause}`).join('\\n')}
 
 👥 *जलजन्य व सांधेदुखी रुग्ण नोंदणी सारांश (एकूण: ${totalPatients}):*
 - कॉलरा: ${choleraCases} | गॅस्ट्रो: ${gastroCases} | अतिसार: ${diarrheaCases}

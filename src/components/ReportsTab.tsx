@@ -67,8 +67,9 @@ export const ReportsTab: React.FC<Props> = ({
     survey,
     patients,
     tbPatients,
-    leprosyPatients,
-    cataractPatients
+  leprosyPatients,
+  cataractPatients,
+  deaths
   );
 
   const handleCopyWhatsApp = async () => {
@@ -91,8 +92,9 @@ export const ReportsTab: React.FC<Props> = ({
         patients,
         tbPatients,
         leprosyPatients,
-        cataractPatients,
-        'printable-report'
+  cataractPatients,
+  deaths,
+  'printable-report'
       );
     } catch (err) {
       console.error('PDF Generation Error:', err);
@@ -320,7 +322,7 @@ export const ReportsTab: React.FC<Props> = ({
                     </span>
                   </td>
                   <td className="p-2.5 text-center font-bold text-slate-800">{survey.saltSampleSent} नमुने</td>
-                  <td className="p-2.5 text-slate-600">आयोडीनचे प्रमाण मानक ���िकषांप्रमाणे</td>
+                  <td className="p-2.5 text-slate-600">आयो��ीनचे प्रमाण मानक �����िकषांप्रमाणे</td>
                 </tr>
                 <tr className="bg-emerald-50/40">
                   <td className="p-2.5 font-bold text-emerald-950">TCL (टी.सी.एल. पावडर वापर)</td>
@@ -445,6 +447,16 @@ export const ReportsTab: React.FC<Props> = ({
               </div>
             </div>
           </div>
+
+          {deaths.length > 0 && (
+            <div className="mt-4 overflow-x-auto rounded-xl border border-red-200">
+              <div className="bg-red-50 px-3 py-2 text-xs font-bold text-red-800">मृत्यू नोंदणी लाईनलिस्ट</div>
+              <table className="w-full text-xs text-left">
+                <thead className="bg-red-100 text-red-900"><tr><th className="p-2">क्र.</th><th className="p-2">मृत्यू दिनांक</th><th className="p-2">नाव / वय</th><th className="p-2">गाव</th><th className="p-2">मृत्यू कोठे झाला</th><th className="p-2">मृत्यूचे कारण</th></tr></thead>
+                <tbody>{deaths.map((death, index) => <tr key={death.id} className="border-t border-red-100"><td className="p-2">{index + 1}</td><td className="p-2 whitespace-nowrap">{death.date}</td><td className="p-2">{death.name} / {death.age}</td><td className="p-2">{death.village || '—'}</td><td className="p-2">{death.place}{death.deathPlace ? ` - ${death.deathPlace}` : ''}</td><td className="p-2">{death.cause}</td></tr>)}</tbody>
+              </table>
+            </div>
+          )}
         </div>
 
         {/* Section 4: Waterborne Disease Register */}
