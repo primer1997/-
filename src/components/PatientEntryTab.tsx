@@ -633,19 +633,18 @@ export const PatientEntryTab: React.FC<PatientEntryTabProps> = ({
                               type="button"
                               onClick={() => openEditModal(p)}
                               className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-bold text-[#1a4a72] bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded transition-colors cursor-pointer"
-                              title="माहिती एडिट करा"
+                              title="Edit patient record"
                             >
-              <span aria-hidden="true" className="text-[11px] font-black leading-none">संपा.</span>
-              एडिट
+                              Edit
                             </button>
 
                             <button
                               type="button"
                               onClick={() => setDeleteTarget(p)}
-                              className="p-1 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded transition-colors cursor-pointer"
+                              className="px-2 py-1 text-xs font-bold text-rose-600 hover:bg-rose-50 border border-rose-200 rounded transition-colors cursor-pointer"
                               title="हटवा"
                             >
-                              <Trash2 className="w-3.5 h-3.5" />
+                              हटवा
                             </button>
                           </div>
                         </td>
@@ -678,7 +677,7 @@ export const PatientEntryTab: React.FC<PatientEntryTabProps> = ({
                   <div className="flex items-center gap-2">
                     <UserPlus className="w-5 h-5 text-amber-400" />
                     <h3 className="font-bold text-base sm:text-lg">
-                      {editingPatient ? 'रुग्ण माहिती संपादित करा (Edit)' : 'नवीन रुग्ण नोंदणी (New Registration)'}
+                      {editingPatient ? 'रुग्ण माहिती संपादित करा (Edit)' : 'नवीन रुग्ण नोंदण�� (New Registration)'}
                     </h3>
                   </div>
                   <button
