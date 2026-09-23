@@ -633,9 +633,9 @@ export const PatientEntryTab: React.FC<PatientEntryTabProps> = ({
                               type="button"
                               onClick={() => openEditModal(p)}
                               className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-bold text-[#1a4a72] bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded transition-colors cursor-pointer"
-                              title="माहिती एडिट करा"
+                              title="एडिट करा"
                             >
-              नोंद संपादित करा
+                              एडिट करा
                             </button>
 
                             <button
@@ -677,7 +677,7 @@ export const PatientEntryTab: React.FC<PatientEntryTabProps> = ({
                   <div className="flex items-center gap-2">
                     <UserPlus className="w-5 h-5 text-amber-400" />
                     <h3 className="font-bold text-base sm:text-lg">
-                      {editingPatient ? 'रुग्ण माहिती संपादित करा (Edit)' : 'नवीन रुग्ण नोंदणी (New Registration)'}
+                      {editingPatient ? 'रुग्ण माहिती संपादित करा (Edit)' : 'नवीन रुग्ण नोंदण�� (New Registration)'}
                     </h3>
                   </div>
                   <button
