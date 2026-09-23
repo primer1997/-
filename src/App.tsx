@@ -6,6 +6,7 @@ import {
   TbPatientRecord,
   LeprosyPatientRecord,
   CataractPatientRecord,
+  DeathRecord,
 } from './types';
 import {
   loadConfig,
@@ -22,6 +23,8 @@ import {
   saveLeprosyPatients,
   loadCataractPatients,
   saveCataractPatients,
+  loadDeaths,
+  saveDeaths,
   resetAllData,
 } from './utils/storage';
 import {
@@ -98,6 +101,7 @@ function Workspace() {
   const [tbPatients, setTbPatients] = useState<TbPatientRecord[]>(() => loadTbPatients());
   const [leprosyPatients, setLeprosyPatients] = useState<LeprosyPatientRecord[]>(() => loadLeprosyPatients());
   const [cataractPatients, setCataractPatients] = useState<CataractPatientRecord[]>(() => loadCataractPatients());
+  const [deaths, setDeaths] = useState<DeathRecord[]>(() => loadDeaths());
 
   const [activeTab, setActiveTab] = useState<'survey' | 'entry' | 'report'>('survey');
 
@@ -201,6 +205,10 @@ function Workspace() {
     saveCataractPatients(updated);
   };
 
+  const handleAddDeath = (record: DeathRecord) => { const updated = [record, ...deaths]; setDeaths(updated); saveDeaths(updated); };
+  const handleUpdateDeath = (record: DeathRecord) => { const updated = deaths.map((item) => item.id === record.id ? record : item); setDeaths(updated); saveDeaths(updated); };
+  const handleDeleteDeath = (id: string) => { const updated = deaths.filter((item) => item.id !== id); setDeaths(updated); saveDeaths(updated); };
+
   const handleResetData = () => {
     resetAllData();
     setConfig(initialConfig);
@@ -209,6 +217,7 @@ function Workspace() {
     setTbPatients(initialTbPatients);
     setLeprosyPatients(initialLeprosyPatients);
     setCataractPatients(initialCataractPatients);
+    setDeaths([]);
   };
 
   const totalAllPatients =
@@ -307,6 +316,10 @@ function Workspace() {
                 onAddCataractPatient={handleAddCataractPatient}
                 onUpdateCataractPatient={handleUpdateCataractPatient}
                 onDeleteCataractPatient={handleDeleteCataractPatient}
+                deaths={deaths}
+                onAddDeath={handleAddDeath}
+                onUpdateDeath={handleUpdateDeath}
+                onDeleteDeath={handleDeleteDeath}
               />
             </div>
           )}

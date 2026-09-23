@@ -5,11 +5,13 @@ import {
   TbPatientRecord,
   LeprosyPatientRecord,
   CataractPatientRecord,
+  DeathRecord,
 } from '../types';
 import { ConfirmDeleteModal } from './ConfirmDeleteModal';
 import { TbLinelistTab } from './TbLinelistTab';
 import { LeprosyLinelistTab } from './LeprosyLinelistTab';
 import { CataractLinelistTab } from './CataractLinelistTab';
+import { DeathLinelistTab } from './DeathLinelistTab';
 import {
   UserPlus,
   Search,
@@ -53,6 +55,10 @@ interface PatientEntryTabProps {
   onAddCataractPatient: (patient: CataractPatientRecord) => void;
   onUpdateCataractPatient: (patient: CataractPatientRecord) => void;
   onDeleteCataractPatient: (id: string) => void;
+  deaths: DeathRecord[];
+  onAddDeath: (record: DeathRecord) => void;
+  onUpdateDeath: (record: DeathRecord) => void;
+  onDeleteDeath: (id: string) => void;
 }
 
 const COMMON_SYMPTOMS = [
@@ -97,9 +103,13 @@ export const PatientEntryTab: React.FC<PatientEntryTabProps> = ({
   onAddCataractPatient,
   onUpdateCataractPatient,
   onDeleteCataractPatient,
+  deaths,
+  onAddDeath,
+  onUpdateDeath,
+  onDeleteDeath,
 }) => {
   // Sub-Tab selection: Waterborne, TB, Leprosy, Cataract
-  const [activeSubTab, setActiveSubTab] = useState<'waterborne' | 'tb' | 'leprosy' | 'cataract'>(
+  const [activeSubTab, setActiveSubTab] = useState<'waterborne' | 'tb' | 'leprosy' | 'cataract' | 'death'>(
     'waterborne'
   );
 
@@ -335,7 +345,13 @@ export const PatientEntryTab: React.FC<PatientEntryTabProps> = ({
             {cataractPatients.length}
           </span>
         </button>
+
+        <button type="button" id="subtab-death-btn" onClick={() => setActiveSubTab('death')} className={`flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-xs sm:text-sm font-bold transition-all cursor-pointer ${activeSubTab === 'death' ? 'bg-slate-800 text-white shadow-xs' : 'text-slate-700 hover:bg-slate-100'}`}>
+          <span className="text-base leading-none">†</span><span>मृत्यू लाईनलिस्ट</span><span className={`px-1.5 py-0.2 rounded-full text-[10px] font-bold ${activeSubTab === 'death' ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-700'}`}>{deaths.length}</span>
+        </button>
       </div>
+
+      {activeSubTab === 'death' && <DeathLinelistTab records={deaths} onAdd={onAddDeath} onUpdate={onUpdateDeath} onDelete={onDeleteDeath} />}
 
       {/* Sub-tab 1: TB Linelist */}
       {activeSubTab === 'tb' && (
@@ -368,7 +384,9 @@ export const PatientEntryTab: React.FC<PatientEntryTabProps> = ({
       )}
 
       {/* Sub-tab 4: Waterborne & Outbreak Linelist */}
-      {activeSubTab === 'waterborne' && (
+      {activeSubTab === 'death' && <DeathLinelistTab records={deaths} onAdd={onAddDeath} onUpdate={onUpdateDeath} onDelete={onDeleteDeath} />}
+
+  {activeSubTab === 'waterborne' && (
         <div className="space-y-4">
           {/* Top Metrics Row - 7 Disease Categories with quick filter */}
           <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2">

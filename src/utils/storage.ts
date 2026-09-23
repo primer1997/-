@@ -5,6 +5,7 @@ import {
   TbPatientRecord,
   LeprosyPatientRecord,
   CataractPatientRecord,
+  DeathRecord,
 } from '../types';
 import {
   initialConfig,
@@ -23,6 +24,7 @@ const PATIENTS_KEY = 'arogya_sevak_patients_v2';
 const TB_PATIENTS_KEY = 'arogya_sevak_tb_patients_v1';
 const LEPROSY_PATIENTS_KEY = 'arogya_sevak_leprosy_patients_v1';
 const CATARACT_PATIENTS_KEY = 'arogya_sevak_cataract_patients_v1';
+const DEATHS_KEY = 'arogya_sevak_deaths_v1';
 
 export function loadConfig(): SubCentreConfig {
   try {
@@ -223,6 +225,24 @@ export function saveCataractPatients(patients: CataractPatientRecord[]) {
   }
 }
 
+export function loadDeaths(): DeathRecord[] {
+  try {
+    const raw = localStorage.getItem(DEATHS_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch (e) {
+    console.error('Failed to load death records from storage', e);
+  }
+  return [];
+}
+
+export function saveDeaths(records: DeathRecord[]) {
+  try {
+    localStorage.setItem(DEATHS_KEY, JSON.stringify(records));
+  } catch (e) {
+    console.error('Failed to save death records', e);
+  }
+}
+
 export function resetAllData() {
   localStorage.removeItem(CONFIG_KEY);
   localStorage.removeItem(SURVEY_KEY);
@@ -231,5 +251,6 @@ export function resetAllData() {
   localStorage.removeItem(TB_PATIENTS_KEY);
   localStorage.removeItem(LEPROSY_PATIENTS_KEY);
   localStorage.removeItem(CATARACT_PATIENTS_KEY);
+  localStorage.removeItem(DEATHS_KEY);
 }
 
