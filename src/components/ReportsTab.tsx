@@ -6,6 +6,7 @@ import {
   TbPatientRecord,
   LeprosyPatientRecord,
   CataractPatientRecord,
+  DeathRecord,
 } from '../types';
 import { calculateIndices, exportToExcel, exportToPDF, generateWhatsAppSummary } from '../utils/exportUtils';
 import { WhatsAppSummaryModal, copyToClipboard } from './WhatsAppSummaryModal';
@@ -33,6 +34,7 @@ interface Props {
   tbPatients?: TbPatientRecord[];
   leprosyPatients?: LeprosyPatientRecord[];
   cataractPatients?: CataractPatientRecord[];
+  deaths?: DeathRecord[];
   onNavigateTab?: (tab: 'survey' | 'entry') => void;
 }
 
@@ -43,6 +45,7 @@ export const ReportsTab: React.FC<Props> = ({
   tbPatients = [],
   leprosyPatients = [],
   cataractPatients = [],
+  deaths = [],
   onNavigateTab,
 }) => {
   const [copied, setCopied] = useState(false);
@@ -64,8 +67,9 @@ export const ReportsTab: React.FC<Props> = ({
     survey,
     patients,
     tbPatients,
-    leprosyPatients,
-    cataractPatients
+  leprosyPatients,
+  cataractPatients,
+  deaths
   );
 
   const handleCopyWhatsApp = async () => {
@@ -88,8 +92,9 @@ export const ReportsTab: React.FC<Props> = ({
         patients,
         tbPatients,
         leprosyPatients,
-        cataractPatients,
-        'printable-report'
+  cataractPatients,
+  deaths,
+  'printable-report'
       );
     } catch (err) {
       console.error('PDF Generation Error:', err);
@@ -119,7 +124,7 @@ export const ReportsTab: React.FC<Props> = ({
           <button
             id="export-excel-btn"
             type="button"
-            onClick={() => exportToExcel(config, survey, patients, tbPatients, leprosyPatients, cataractPatients)}
+            onClick={() => exportToExcel(config, survey, patients, tbPatients, leprosyPatients, cataractPatients, deaths)}
             className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold rounded-lg shadow-sm transition-colors min-w-[130px] justify-center cursor-pointer"
           >
             <FileSpreadsheet className="w-4 h-4" />
@@ -317,7 +322,7 @@ export const ReportsTab: React.FC<Props> = ({
                     </span>
                   </td>
                   <td className="p-2.5 text-center font-bold text-slate-800">{survey.saltSampleSent} नमुने</td>
-                  <td className="p-2.5 text-slate-600">आयोडीनचे प्रमाण मानक निकषांप्रमाणे</td>
+                  <td className="p-2.5 text-slate-600">आयो��ीनचे प्रमाण म���नक �����िकषांप्रमाणे</td>
                 </tr>
                 <tr className="bg-emerald-50/40">
                   <td className="p-2.5 font-bold text-emerald-950">TCL (टी.सी.एल. पावडर वापर)</td>
@@ -406,6 +411,7 @@ export const ReportsTab: React.FC<Props> = ({
 
             {/* Cataract Card */}
             <div className="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
+
               <div className="flex items-center justify-between border-b pb-1.5 mb-2">
                 <span className="font-bold text-xs text-amber-800">३. मोतीबिंदू (Cataract - NPCB)</span>
                 <span className="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold">
@@ -427,7 +433,30 @@ export const ReportsTab: React.FC<Props> = ({
                 </div>
               </div>
             </div>
+
+            {/* Death Register Card */}
+            <div className="p-3.5 bg-red-50 border border-red-200 rounded-xl">
+              <div className="flex items-center justify-between border-b border-red-200 pb-1.5 mb-2">
+                <span className="font-bold text-xs text-red-800">४. मृत्यू नोंदणी</span>
+                <span className="text-[10px] bg-red-100 text-red-800 px-2 py-0.5 rounded font-bold">{deaths.length} नोंदी</span>
+              </div>
+              <div className="space-y-1 text-xs">
+                <div className="flex justify-between"><span className="text-slate-600">एकूण मृत्यू:</span><span className="font-bold text-red-700">{deaths.length}</span></div>
+                <div className="flex justify-between"><span className="text-slate-600">गावातील मृत्यू:</span><span className="font-bold text-slate-900">{deaths.filter((death) => death.place === 'गावात').length}</span></div>
+                <div className="flex justify-between"><span className="text-slate-600">गावाबाहेरील मृत्यू:</span><span className="font-bold text-slate-900">{deaths.filter((death) => death.place === 'गावाबाहेर').length}</span></div>
+              </div>
+            </div>
           </div>
+
+          {deaths.length > 0 && (
+            <div className="mt-4 overflow-x-auto rounded-xl border border-red-200">
+              <div className="bg-red-50 px-3 py-2 text-xs font-bold text-red-800">मृत्यू नोंदणी लाईनलिस्ट</div>
+              <table className="w-full text-xs text-left">
+                <thead className="bg-red-100 text-red-900"><tr><th className="p-2">क्र.</th><th className="p-2">मृत्यू दिनांक</th><th className="p-2">नाव / वय</th><th className="p-2">गाव</th><th className="p-2">मृत्यू कोठे झाला</th><th className="p-2">मृत्यूचे कारण</th></tr></thead>
+                <tbody>{deaths.map((death, index) => <tr key={death.id} className="border-t border-red-100"><td className="p-2">{index + 1}</td><td className="p-2 whitespace-nowrap">{death.date}</td><td className="p-2">{death.name || (death as DeathRecord & { deceasedName?: string; deceased_name?: string; personName?: string; fullName?: string }).deceasedName || (death as DeathRecord & { deceased_name?: string }).deceased_name || (death as DeathRecord & { personName?: string }).personName || (death as DeathRecord & { fullName?: string }).fullName || 'नाव उपलब्ध नाही'} / {death.age}</td><td className="p-2">{death.village || '—'}</td><td className="p-2">{death.place}{death.deathPlace ? ` - ${death.deathPlace}` : ''}</td><td className="p-2">{death.cause}</td></tr>)}</tbody>
+              </table>
+            </div>
+          )}
         </div>
 
         {/* Section 4: Waterborne Disease Register */}
@@ -448,7 +477,7 @@ export const ReportsTab: React.FC<Props> = ({
                 className="print:hidden inline-flex items-center gap-1 text-[11px] font-bold text-[#1a4a72] bg-blue-50 hover:bg-blue-100 px-2 py-0.5 rounded border border-blue-200 transition-colors"
               >
                 <Edit3 className="w-3 h-3 text-[#f39c12]" />
-                रुग्ण नोंदवही एडिट करा
+                रुग्ण नो���दवही एडिट करा
               </button>
             )}
           </div>
@@ -534,7 +563,7 @@ export const ReportsTab: React.FC<Props> = ({
           <div className="mt-6">
             <div className="border-b border-slate-200 pb-2 mb-3 flex items-center justify-between flex-wrap gap-2">
               <h3 className="text-sm font-bold text-[#1a4a72] uppercase tracking-wide">
-                ५. विशेष लाईनलिस्ट तपशील (TB, कुष्ठरोग व मोतीबिंदू वैयक्तिक नोंदी)
+                ५. विशेष लाई���लिस्ट तपशील (TB, कुष्ठरोग व मोतीबिंदू वैयक्तिक नोंदी)
               </h3>
               {onNavigateTab && (
                 <button
@@ -548,7 +577,7 @@ export const ReportsTab: React.FC<Props> = ({
               )}
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
               {/* TB list */}
               <div className="border border-slate-200 rounded-xl p-3 bg-slate-50/50">
                 <div className="font-bold text-xs text-rose-800 mb-2 flex items-center justify-between">

@@ -332,8 +332,9 @@ function Workspace() {
                 patients={patients}
                 tbPatients={tbPatients}
                 leprosyPatients={leprosyPatients}
-                cataractPatients={cataractPatients}
-                onNavigateTab={(tab) => setActiveTab(tab)}
+  cataractPatients={cataractPatients}
+  deaths={deaths}
+  onNavigateTab={(tab) => setActiveTab(tab)}
               />
             </div>
           )}
