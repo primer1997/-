@@ -390,7 +390,7 @@ export const PatientEntryTab: React.FC<PatientEntryTabProps> = ({
                   : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'
               }`}
             >
-              <div className="text-[11px] font-medium opacity-80">एक��ण रुग्ण</div>
+              <div className="text-[11px] font-medium opacity-80">एकूण रुग्ण</div>
               <div className="text-xl font-black mt-0.5">{totalCount}</div>
               <div className="text-[10px] opacity-70">सर्व नोंदी</div>
             </button>
@@ -399,7 +399,7 @@ export const PatientEntryTab: React.FC<PatientEntryTabProps> = ({
               type="button"
               onClick={() => setDiseaseFilter(diseaseFilter === 'कॉलरा' ? 'all' : 'कॉलरा')}
               className={`text-left p-2.5 rounded-xl border transition-all cursor-pointer ${
-                diseaseFilter === 'कॉलरा'
+                diseaseFilter === '��ॉलरा'
                   ? 'bg-rose-700 text-white border-rose-700 shadow-xs'
                   : 'bg-white text-slate-700 border-rose-200 hover:border-rose-300'
               }`}
