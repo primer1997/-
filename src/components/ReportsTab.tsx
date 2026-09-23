@@ -320,7 +320,7 @@ export const ReportsTab: React.FC<Props> = ({
                     </span>
                   </td>
                   <td className="p-2.5 text-center font-bold text-slate-800">{survey.saltSampleSent} नमुने</td>
-                  <td className="p-2.5 text-slate-600">आयोडीनचे प्रमाण मानक निकषांप्रमाणे</td>
+                  <td className="p-2.5 text-slate-600">आयोडीनचे प्रमाण मानक ���िकषांप्रमाणे</td>
                 </tr>
                 <tr className="bg-emerald-50/40">
                   <td className="p-2.5 font-bold text-emerald-950">TCL (टी.सी.एल. पावडर वापर)</td>
@@ -409,6 +409,7 @@ export const ReportsTab: React.FC<Props> = ({
 
             {/* Cataract Card */}
             <div className="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
+
               <div className="flex items-center justify-between border-b pb-1.5 mb-2">
                 <span className="font-bold text-xs text-amber-800">३. मोतीबिंदू (Cataract - NPCB)</span>
                 <span className="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold">
@@ -428,6 +429,19 @@ export const ReportsTab: React.FC<Props> = ({
                   <span>शस्त्रक्रिया यशस्विता:</span>
                   <span className="text-emerald-700 font-semibold">१००% यशस्वी</span>
                 </div>
+              </div>
+            </div>
+
+            {/* Death Register Card */}
+            <div className="p-3.5 bg-red-50 border border-red-200 rounded-xl">
+              <div className="flex items-center justify-between border-b border-red-200 pb-1.5 mb-2">
+                <span className="font-bold text-xs text-red-800">४. मृत्यू नोंदणी</span>
+                <span className="text-[10px] bg-red-100 text-red-800 px-2 py-0.5 rounded font-bold">{deaths.length} नोंदी</span>
+              </div>
+              <div className="space-y-1 text-xs">
+                <div className="flex justify-between"><span className="text-slate-600">एकूण मृत्यू:</span><span className="font-bold text-red-700">{deaths.length}</span></div>
+                <div className="flex justify-between"><span className="text-slate-600">गावातील मृत्यू:</span><span className="font-bold text-slate-900">{deaths.filter((death) => death.place === 'गावात').length}</span></div>
+                <div className="flex justify-between"><span className="text-slate-600">गावाबाहेरील मृत्यू:</span><span className="font-bold text-slate-900">{deaths.filter((death) => death.place === 'गावाबाहेर').length}</span></div>
               </div>
             </div>
           </div>
@@ -451,7 +465,7 @@ export const ReportsTab: React.FC<Props> = ({
                 className="print:hidden inline-flex items-center gap-1 text-[11px] font-bold text-[#1a4a72] bg-blue-50 hover:bg-blue-100 px-2 py-0.5 rounded border border-blue-200 transition-colors"
               >
                 <Edit3 className="w-3 h-3 text-[#f39c12]" />
-                रुग्ण नोंदवही एडिट करा
+                रुग्ण नो���दवही एडिट करा
               </button>
             )}
           </div>
@@ -551,7 +565,7 @@ export const ReportsTab: React.FC<Props> = ({
               )}
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
               {/* TB list */}
               <div className="border border-slate-200 rounded-xl p-3 bg-slate-50/50">
                 <div className="font-bold text-xs text-rose-800 mb-2 flex items-center justify-between">
