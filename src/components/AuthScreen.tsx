@@ -32,7 +32,14 @@ export const AuthScreen: React.FC<Props> = ({ onAuthenticated }) => {
     });
     setIsResending(false);
     if (resendError) {
-      setError('Confirmation email could not be sent. Check the email address, Spam folder, and try again after a few minutes.');
+      const resendMessage = resendError.message.toLowerCase();
+      if (resendMessage.includes('not authorized') || resendMessage.includes('email_address_not_authorized')) {
+        setError('या Supabase प्रकल्पाच्या email provider कडून या पत्त्यावर मेल पाठवण्याची परवानगी नाही. प्रकल्पातील अधिकृत email वापरा किंवा administrator ने custom SMTP जोडणे आवश्यक आहे.');
+      } else if (resendMessage.includes('rate limit') || resendMessage.includes('over_email_send_rate_limit')) {
+        setError('मेल पाठवण्याची मर्यादा पूर्ण झाली आहे. काही मिनिटांनी पुन्हा प्रयत्न करा.');
+      } else {
+        setError('Confirmation email पाठवता आला नाही. पत्ता तपासा आणि काही मिनिटांनी पुन्हा प्रयत्न करा.');
+      }
       return;
     }
       setMessage('Confirmation link पुन्हा पाठवली आहे. Supabase email मध्ये साधारण code नसतो; email मधील Confirm your email link उघडा. Inbox, Spam आणि Promotions फोल्डर तपासा.');
@@ -58,6 +65,14 @@ export const AuthScreen: React.FC<Props> = ({ onAuthenticated }) => {
 
     if (result.error) {
       const lowerMessage = result.error.message.toLowerCase();
+      if (lowerMessage.includes('not authorized') || lowerMessage.includes('email_address_not_authorized')) {
+        setError('या Supabase प्रकल्पाच्या email provider कडून या पत्त्यावर confirmation email पाठवण्याची परवानगी नाही. अधिकृत email वापरा किंवा administrator ने custom SMTP जोडणे आवश्यक आहे.');
+        return;
+      }
+      if (lowerMessage.includes('rate limit') || lowerMessage.includes('over_email_send_rate_limit')) {
+        setError('Confirmation email ची rate limit पूर्ण झाली आहे. काही मिनिटांनी पुन्हा प्रयत्न करा.');
+        return;
+      }
       if (lowerMessage.includes('email not confirmed')) {
         setError('Please confirm your email before signing in.');
       } else if (lowerMessage.includes('password') && lowerMessage.includes('weak')) {
