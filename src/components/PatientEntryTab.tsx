@@ -221,15 +221,6 @@ export const PatientEntryTab: React.FC<PatientEntryTabProps> = ({
     }
   };
 
-  const handleQuickTclToggle = (patient: PatientRecord) => {
-    const newStatus: 'होय' | 'नाही' = patient.tclStatus === 'होय' ? 'नाही' : 'होय';
-    onUpdatePatient({
-      ...patient,
-      tclStatus: newStatus,
-      tclDetails: newStatus === 'होय' ? 'TCL क्लोरीनेशन केले' : 'TCL केले नाही',
-    });
-  };
-
   const handleDeleteConfirm = () => {
     if (deleteTarget) {
       onDeletePatient(deleteTarget.id);
@@ -399,7 +390,7 @@ export const PatientEntryTab: React.FC<PatientEntryTabProps> = ({
                   : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'
               }`}
             >
-              <div className="text-[11px] font-medium opacity-80">एकूण रुग्ण</div>
+              <div className="text-[11px] font-medium opacity-80">एक��ण रुग्ण</div>
               <div className="text-xl font-black mt-0.5">{totalCount}</div>
               <div className="text-[10px] opacity-70">सर्व नोंदी</div>
             </button>
@@ -802,33 +793,6 @@ export const PatientEntryTab: React.FC<PatientEntryTabProps> = ({
                       </select>
                     </div>
 
-                    {/* TCL Status */}
-                    <div>
-                      <label className="block text-xs font-bold text-slate-700 mb-1">
-                        TCL पावडर वापर / क्लोरीनेशन केले का? *
-                      </label>
-                      <select
-                        value={formData.tclStatus || 'होय'}
-                        onChange={(e) => setFormData({ ...formData, tclStatus: e.target.value as any })}
-                        className="w-full px-3 py-1.5 border border-slate-300 rounded-lg text-xs sm:text-sm font-bold text-emerald-800 focus:ring-1 focus:ring-emerald-500 outline-none"
-                      >
-                        <option value="होय">होय (TCL क्लोरीनेशन केले)</option>
-                        <option value="नाही">नाही (केले नाही)</option>
-                      </select>
-                    </div>
-
-                    <div className="sm:col-span-2">
-                      <label className="block text-xs font-bold text-slate-700 mb-1">
-                        TCL वापर तपशील / शेरा
-                      </label>
-                      <input
-                        type="text"
-                        value={formData.tclDetails || ''}
-                        onChange={(e) => setFormData({ ...formData, tclDetails: e.target.value })}
-                        placeholder="उदा. पिण्याच्या पाण्याच्या भांड्यात TCL वापर व उकळलेले पाणी वापरण्याचा सल्ला"
-                        className="w-full px-3 py-1.5 border border-slate-300 rounded-lg text-xs sm:text-sm focus:ring-1 focus:ring-[#1a4a72] outline-none"
-                      />
-                    </div>
                   </div>
 
                   {/* Symptoms Multi-Check */}
