@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { SubCentreConfig } from '../types';
-import { Settings, ShieldCheck, RefreshCw, Calendar } from 'lucide-react';
+import { Settings, ShieldCheck, RefreshCw, Calendar, LogOut } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 import { ConfigModal } from './ConfigModal';
 import { PWAInstallButton } from './PWAInstallButton';
 import {
@@ -97,6 +98,16 @@ export const Header: React.FC<Props> = ({ config, onUpdateConfig, onResetData, o
             </div>
 
             <PWAInstallButton />
+
+            <button
+              type="button"
+              onClick={() => void supabase.auth.signOut()}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold bg-white/10 hover:bg-white/20 border border-white/20 rounded-lg text-white transition-colors cursor-pointer"
+              title="Sign out"
+            >
+              <LogOut className="w-3.5 h-3.5 text-[#f39c12]" />
+              Sign out
+            </button>
 
             <button
               id="edit-config-btn"

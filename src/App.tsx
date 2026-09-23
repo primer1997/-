@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   SubCentreConfig,
   ContainerSurveyData,
@@ -38,6 +38,8 @@ import {
   initialCataractPatients,
 } from './data/initialData';
 import { Header } from './components/Header';
+import { AuthScreen } from './components/AuthScreen';
+import { supabase } from './lib/supabase';
 import { SurveyProgramsTab } from './components/SurveyProgramsTab';
 import { PatientEntryTab } from './components/PatientEntryTab';
 import { ReportsTab } from './components/ReportsTab';
@@ -45,7 +47,37 @@ import { OfflineIndicator } from './components/OfflineIndicator';
 import { ClipboardList, Users, FileBarChart, ShieldCheck } from 'lucide-react';
 
 export default function App() {
+  const [isLoadingAuth, setIsLoadingAuth] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [config, setConfig] = useState<SubCentreConfig>(() => loadConfig());
+
+  useEffect(() => {
+    let mounted = true;
+    supabase.auth.getSession().then(({ data }) => {
+      if (mounted) {
+        setIsAuthenticated(Boolean(data.session));
+        setIsLoadingAuth(false);
+      }
+    });
+
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsAuthenticated(Boolean(session));
+      setIsLoadingAuth(false);
+    });
+
+    return () => {
+      mounted = false;
+      listener.subscription.unsubscribe();
+    };
+  }, []);
+
+  if (isLoadingAuth) {
+    return <div className="min-h-screen bg-[#0f2740] flex items-center justify-center text-white">Loading secure workspace...</div>;
+  }
+
+  if (!isAuthenticated) {
+    return <AuthScreen onAuthenticated={() => setIsAuthenticated(true)} />;
+  }
   const [survey, setSurvey] = useState<ContainerSurveyData>(() => {
     const loadedConfig = loadConfig();
     const { monthNum, year } = parseReportingMonth(loadedConfig.reportingMonth);
