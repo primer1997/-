@@ -3,7 +3,6 @@ import { SubCentreConfig } from '../types';
 import { Settings, ShieldCheck, RefreshCw, Calendar, LogOut } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { ConfigModal } from './ConfigModal';
-import { PWAInstallButton } from './PWAInstallButton';
 import {
   MARATHI_MONTHS,
   AVAILABLE_YEARS,
@@ -96,8 +95,6 @@ export const Header: React.FC<Props> = ({ config, onUpdateConfig, onResetData, o
                 ))}
               </select>
             </div>
-
-            <PWAInstallButton />
 
             <button
               type="button"
