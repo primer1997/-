@@ -9,6 +9,7 @@ import {
   TbPatientRecord,
   LeprosyPatientRecord,
   CataractPatientRecord,
+  DeathRecord,
 } from '../types';
 
 export function calculateIndices(survey: ContainerSurveyData) {
@@ -174,8 +175,9 @@ export function exportToExcel(
   patients: PatientRecord[],
   tbPatients: TbPatientRecord[] = [],
   leprosyPatients: LeprosyPatientRecord[] = [],
-  cataractPatients: CataractPatientRecord[] = []
-) {
+  cataractPatients: CataractPatientRecord[] = [],
+  deaths: DeathRecord[] = []
+  ) {
   const wb = XLSX.utils.book_new();
   const indices = calculateIndices(survey);
 
@@ -245,7 +247,7 @@ export function exportToExcel(
     ['', '', '', ''],
     ['अहवाल सादरकर्ता (आरोग्य सेवक / सेविका)', '', 'तपासणी व पडताळणी (वैद्यकीय अधिकारी)', ''],
     [`${config.workerName} (${config.workerDesignation})`, '', 'वैद्यकीय अधिकारी (MBBS / BAMS)', ''],
-    [`आरोग्य उपकेंद्र ${config.subCentreName}, प्रा.आ.के. ${config.phcName}`, '', `प्राथमिक आरोग्य केंद्र ${config.phcName}, ता. ${config.taluka}`, ''],
+    [`आरोग्य उपकेंद्र ${config.subCentreName}, प्रा.आ.के. ${config.phcName}`, '', `प्राथमिक आरो���्य केंद्र ${config.phcName}, ता. ${config.taluka}`, ''],
   ];
 
   const wsSurvey = XLSX.utils.aoa_to_sheet(surveySheetData);
@@ -836,6 +838,23 @@ export function exportToExcel(
   }
 
   XLSX.utils.book_append_sheet(wb, wsCataract, '५_मोतीबिंदू_लाईनलिस्ट');
+
+  const deathHeaders = ['अ.क्र.', 'मृत्यू दिनांक', 'मृत व्यक्तीचे नाव', 'वय', 'लिंग', 'गाव / वस्ती', 'मृत्यू गावात/गावाबाहेर', 'मृत्यूचे ठिकाण', 'मृत्यूचे कारण', 'शेरा'];
+  const deathRows = deaths.map((record, index) => [index + 1, record.date, record.name, record.age, record.gender, record.village, record.place, record.deathPlace, record.cause, record.remarks || '']);
+  const deathSheetData = [
+    [`मृत्यू नोंदणी लाईनलिस्ट - ${config.reportingMonth}`, ...Array(deathHeaders.length - 1).fill('')],
+    [`उपकेंद्र: ${config.subCentreName} | एकूण मृत्यू नोंदी: ${deaths.length}`, ...Array(deathHeaders.length - 1).fill('')],
+    deathHeaders,
+    ...(deathRows.length ? deathRows : [['सध्या मृत्यूची नोंद उपलब्ध नाही.', ...Array(deathHeaders.length - 1).fill('')]]),
+  ];
+  const wsDeaths = XLSX.utils.aoa_to_sheet(deathSheetData);
+  wsDeaths['!cols'] = autoFitColumns(deathSheetData, 12, 34);
+  wsDeaths['!merges'] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: deathHeaders.length - 1 } }, { s: { r: 1, c: 0 }, e: { r: 1, c: deathHeaders.length - 1 } }];
+  styleRange(wsDeaths, 0, 0, 0, deathHeaders.length - 1, TITLE_BANNER_STYLE('7F1D1D'));
+  styleRange(wsDeaths, 1, 0, 1, deathHeaders.length - 1, META_BANNER_STYLE);
+  styleRange(wsDeaths, 2, 0, 2, deathHeaders.length - 1, TABLE_HEADER_STYLE('991B1B'));
+  for (let row = 3; row < deathSheetData.length; row++) styleRange(wsDeaths, row, 0, row, deathHeaders.length - 1, DATA_CELL_STYLE((row - 3) % 2 === 0));
+  XLSX.utils.book_append_sheet(wb, wsDeaths, '६_मृत्यू_लाईनलिस्ट');
 
   // =========================================================================
   // Generate & Trigger Download of Styled Excel File

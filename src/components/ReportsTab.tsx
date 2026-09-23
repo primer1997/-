@@ -6,6 +6,7 @@ import {
   TbPatientRecord,
   LeprosyPatientRecord,
   CataractPatientRecord,
+  DeathRecord,
 } from '../types';
 import { calculateIndices, exportToExcel, exportToPDF, generateWhatsAppSummary } from '../utils/exportUtils';
 import { WhatsAppSummaryModal, copyToClipboard } from './WhatsAppSummaryModal';
@@ -33,6 +34,7 @@ interface Props {
   tbPatients?: TbPatientRecord[];
   leprosyPatients?: LeprosyPatientRecord[];
   cataractPatients?: CataractPatientRecord[];
+  deaths?: DeathRecord[];
   onNavigateTab?: (tab: 'survey' | 'entry') => void;
 }
 
@@ -43,6 +45,7 @@ export const ReportsTab: React.FC<Props> = ({
   tbPatients = [],
   leprosyPatients = [],
   cataractPatients = [],
+  deaths = [],
   onNavigateTab,
 }) => {
   const [copied, setCopied] = useState(false);
@@ -119,7 +122,7 @@ export const ReportsTab: React.FC<Props> = ({
           <button
             id="export-excel-btn"
             type="button"
-            onClick={() => exportToExcel(config, survey, patients, tbPatients, leprosyPatients, cataractPatients)}
+            onClick={() => exportToExcel(config, survey, patients, tbPatients, leprosyPatients, cataractPatients, deaths)}
             className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold rounded-lg shadow-sm transition-colors min-w-[130px] justify-center cursor-pointer"
           >
             <FileSpreadsheet className="w-4 h-4" />

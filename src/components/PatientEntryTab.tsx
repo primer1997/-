@@ -374,9 +374,7 @@ export const PatientEntryTab: React.FC<PatientEntryTabProps> = ({
         />
       )}
 
-      {/* Sub-tab 4: Waterborne & Outbreak Linelist */}
-      {activeSubTab === 'death' && <DeathLinelistTab records={deaths} onAdd={onAddDeath} onUpdate={onUpdateDeath} onDelete={onDeleteDeath} />}
-
+  {/* Sub-tab 4: Waterborne & Outbreak Linelist */}
   {activeSubTab === 'waterborne' && (
         <div className="space-y-4">
           {/* Top Metrics Row - 7 Disease Categories with quick filter */}
@@ -392,14 +390,14 @@ export const PatientEntryTab: React.FC<PatientEntryTabProps> = ({
             >
               <div className="text-[11px] font-medium opacity-80">एकूण रुग्ण</div>
               <div className="text-xl font-black mt-0.5">{totalCount}</div>
-              <div className="text-[10px] opacity-70">सर्व नोंदी</div>
+              <div className="text-[10px] opacity-70">सर���व नोंदी</div>
             </button>
 
             <button
               type="button"
               onClick={() => setDiseaseFilter(diseaseFilter === 'कॉलरा' ? 'all' : 'कॉलरा')}
               className={`text-left p-2.5 rounded-xl border transition-all cursor-pointer ${
-                diseaseFilter === '��ॉलरा'
+                diseaseFilter === '���ॉलरा'
                   ? 'bg-rose-700 text-white border-rose-700 shadow-xs'
                   : 'bg-white text-slate-700 border-rose-200 hover:border-rose-300'
               }`}
