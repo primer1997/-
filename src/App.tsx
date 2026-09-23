@@ -71,13 +71,6 @@ export default function App() {
     };
   }, []);
 
-  if (isLoadingAuth) {
-    return <div className="min-h-screen bg-[#0f2740] flex items-center justify-center text-white">Loading secure workspace...</div>;
-  }
-
-  if (!isAuthenticated) {
-    return <AuthScreen onAuthenticated={() => setIsAuthenticated(true)} />;
-  }
   const [survey, setSurvey] = useState<ContainerSurveyData>(() => {
     const loadedConfig = loadConfig();
     const { monthNum, year } = parseReportingMonth(loadedConfig.reportingMonth);
@@ -91,6 +84,14 @@ export default function App() {
   const [cataractPatients, setCataractPatients] = useState<CataractPatientRecord[]>(() => loadCataractPatients());
 
   const [activeTab, setActiveTab] = useState<'survey' | 'entry' | 'report'>('survey');
+
+  if (isLoadingAuth) {
+    return <div className="min-h-screen bg-[#0f2740] flex items-center justify-center text-white">Loading secure workspace...</div>;
+  }
+
+  if (!isAuthenticated) {
+    return <AuthScreen onAuthenticated={() => setIsAuthenticated(true)} />;
+  }
 
   // Config & Survey Sync
   const handleUpdateConfig = (newConfig: SubCentreConfig) => {
