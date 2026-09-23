@@ -641,10 +641,10 @@ export const PatientEntryTab: React.FC<PatientEntryTabProps> = ({
                             <button
                               type="button"
                               onClick={() => setDeleteTarget(p)}
-                              className="p-1 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded transition-colors cursor-pointer"
+                              className="px-2 py-1 text-xs font-bold text-rose-600 hover:bg-rose-50 border border-rose-200 rounded transition-colors cursor-pointer"
                               title="हटवा"
                             >
-                              <Trash2 className="w-3.5 h-3.5" />
+                              हटवा
                             </button>
                           </div>
                         </td>
