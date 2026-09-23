@@ -47,7 +47,7 @@ import { SurveyProgramsTab } from './components/SurveyProgramsTab';
 import { PatientEntryTab } from './components/PatientEntryTab';
 import { ReportsTab } from './components/ReportsTab';
 import { OfflineIndicator } from './components/OfflineIndicator';
-import { ClipboardList, Users, FileBarChart, ShieldCheck } from 'lucide-react';
+import { ClipboardList, FileBarChart, ShieldCheck } from 'lucide-react';
 
 function AuthGate() {
   const [isLoadingAuth, setIsLoadingAuth] = useState(true);
@@ -260,7 +260,7 @@ function Workspace() {
                 : 'text-[#1a4a72] hover:bg-slate-100'
             }`}
           >
-            <Users className="w-4 h-4 shrink-0" />
+            <span aria-hidden="true" className="inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-current/15 px-1 text-[10px] font-black leading-none">रु</span>
             <span>रुग्ण नोंदणी व लाईनलिस्ट</span>
             <span
               className={`px-1.5 py-0.2 rounded-full text-[10px] font-bold ${
