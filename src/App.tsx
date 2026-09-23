@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   SubCentreConfig,
   ContainerSurveyData,
@@ -6,6 +6,7 @@ import {
   TbPatientRecord,
   LeprosyPatientRecord,
   CataractPatientRecord,
+  DeathRecord,
 } from './types';
 import {
   loadConfig,
@@ -22,6 +23,8 @@ import {
   saveLeprosyPatients,
   loadCataractPatients,
   saveCataractPatients,
+  loadDeaths,
+  saveDeaths,
   resetAllData,
 } from './utils/storage';
 import {
@@ -38,13 +41,54 @@ import {
   initialCataractPatients,
 } from './data/initialData';
 import { Header } from './components/Header';
+import { AuthScreen } from './components/AuthScreen';
+import { supabase } from './lib/supabase';
 import { SurveyProgramsTab } from './components/SurveyProgramsTab';
 import { PatientEntryTab } from './components/PatientEntryTab';
 import { ReportsTab } from './components/ReportsTab';
 import { OfflineIndicator } from './components/OfflineIndicator';
 import { ClipboardList, Users, FileBarChart, ShieldCheck } from 'lucide-react';
 
+function AuthGate() {
+  const [isLoadingAuth, setIsLoadingAuth] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    let mounted = true;
+    supabase.auth.getSession().then(({ data }) => {
+      if (mounted) {
+        setIsAuthenticated(Boolean(data.session));
+        setIsLoadingAuth(false);
+      }
+    });
+
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsAuthenticated(Boolean(session));
+      setIsLoadingAuth(false);
+    });
+
+    return () => {
+      mounted = false;
+      listener.subscription.unsubscribe();
+    };
+  }, []);
+
+  if (isLoadingAuth) {
+    return <div className="min-h-screen bg-[#0f2740] flex items-center justify-center text-white">Loading secure workspace...</div>;
+  }
+
+  if (!isAuthenticated) {
+    return <AuthScreen onAuthenticated={() => setIsAuthenticated(true)} />;
+  }
+
+  return <Workspace />;
+}
+
 export default function App() {
+  return <AuthGate />;
+}
+
+function Workspace() {
   const [config, setConfig] = useState<SubCentreConfig>(() => loadConfig());
   const [survey, setSurvey] = useState<ContainerSurveyData>(() => {
     const loadedConfig = loadConfig();
@@ -57,6 +101,7 @@ export default function App() {
   const [tbPatients, setTbPatients] = useState<TbPatientRecord[]>(() => loadTbPatients());
   const [leprosyPatients, setLeprosyPatients] = useState<LeprosyPatientRecord[]>(() => loadLeprosyPatients());
   const [cataractPatients, setCataractPatients] = useState<CataractPatientRecord[]>(() => loadCataractPatients());
+  const [deaths, setDeaths] = useState<DeathRecord[]>(() => loadDeaths());
 
   const [activeTab, setActiveTab] = useState<'survey' | 'entry' | 'report'>('survey');
 
@@ -160,6 +205,10 @@ export default function App() {
     saveCataractPatients(updated);
   };
 
+  const handleAddDeath = (record: DeathRecord) => { const updated = [record, ...deaths]; setDeaths(updated); saveDeaths(updated); };
+  const handleUpdateDeath = (record: DeathRecord) => { const updated = deaths.map((item) => item.id === record.id ? record : item); setDeaths(updated); saveDeaths(updated); };
+  const handleDeleteDeath = (id: string) => { const updated = deaths.filter((item) => item.id !== id); setDeaths(updated); saveDeaths(updated); };
+
   const handleResetData = () => {
     resetAllData();
     setConfig(initialConfig);
@@ -168,6 +217,7 @@ export default function App() {
     setTbPatients(initialTbPatients);
     setLeprosyPatients(initialLeprosyPatients);
     setCataractPatients(initialCataractPatients);
+    setDeaths([]);
   };
 
   const totalAllPatients =
@@ -266,6 +316,10 @@ export default function App() {
                 onAddCataractPatient={handleAddCataractPatient}
                 onUpdateCataractPatient={handleUpdateCataractPatient}
                 onDeleteCataractPatient={handleDeleteCataractPatient}
+                deaths={deaths}
+                onAddDeath={handleAddDeath}
+                onUpdateDeath={handleUpdateDeath}
+                onDeleteDeath={handleDeleteDeath}
               />
             </div>
           )}

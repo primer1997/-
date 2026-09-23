@@ -121,6 +121,19 @@ export interface LeprosyPatientRecord {
 }
 
 // ३. मोतीबिंदू रुग्ण लाईनलिस्ट (Cataract Linelist - NPCB)
+export interface DeathRecord {
+  id: string;
+  date: string;
+  name: string;
+  age: number;
+  gender: 'पुरुष' | 'स्त्री' | 'इतर';
+  village: string;
+  place: 'गावात' | 'गावाबाहेर';
+  deathPlace: string;
+  cause: string;
+  remarks?: string;
+}
+
 export interface CataractPatientRecord {
   id: string;
   regNo: string; // नेत्र तपासणी नोंदणी क्र.

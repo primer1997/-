@@ -19,7 +19,8 @@ export const MARATHI_MONTHS: MonthItem[] = [
   { num: 12, marathiName: 'डिसेंबर', englishName: 'December' },
 ];
 
-export const AVAILABLE_YEARS = [2024, 2025, 2026, 2027, 2028, 2029, 2030];
+// Keep the reporting year selector open for historical and future records.
+export const AVAILABLE_YEARS = Array.from({ length: 201 }, (_, index) => 1900 + index);
 
 // Convert English numerals to Marathi numerals
 export function toMarathiDigits(num: number | string): string {
