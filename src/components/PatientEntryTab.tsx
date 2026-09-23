@@ -633,9 +633,9 @@ export const PatientEntryTab: React.FC<PatientEntryTabProps> = ({
                               type="button"
                               onClick={() => openEditModal(p)}
                               className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-bold text-[#1a4a72] bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded transition-colors cursor-pointer"
-                              title="एडिट करा"
+                              title="Edit patient record"
                             >
-                              एडिट करा
+                              Edit
                             </button>
 
                             <button
