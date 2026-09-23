@@ -46,10 +46,9 @@ import { ReportsTab } from './components/ReportsTab';
 import { OfflineIndicator } from './components/OfflineIndicator';
 import { ClipboardList, Users, FileBarChart, ShieldCheck } from 'lucide-react';
 
-export default function App() {
+function AuthGate() {
   const [isLoadingAuth, setIsLoadingAuth] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [config, setConfig] = useState<SubCentreConfig>(() => loadConfig());
 
   useEffect(() => {
     let mounted = true;
@@ -71,6 +70,23 @@ export default function App() {
     };
   }, []);
 
+  if (isLoadingAuth) {
+    return <div className="min-h-screen bg-[#0f2740] flex items-center justify-center text-white">Loading secure workspace...</div>;
+  }
+
+  if (!isAuthenticated) {
+    return <AuthScreen onAuthenticated={() => setIsAuthenticated(true)} />;
+  }
+
+  return <Workspace />;
+}
+
+export default function App() {
+  return <AuthGate />;
+}
+
+function Workspace() {
+  const [config, setConfig] = useState<SubCentreConfig>(() => loadConfig());
   const [survey, setSurvey] = useState<ContainerSurveyData>(() => {
     const loadedConfig = loadConfig();
     const { monthNum, year } = parseReportingMonth(loadedConfig.reportingMonth);
@@ -84,14 +100,6 @@ export default function App() {
   const [cataractPatients, setCataractPatients] = useState<CataractPatientRecord[]>(() => loadCataractPatients());
 
   const [activeTab, setActiveTab] = useState<'survey' | 'entry' | 'report'>('survey');
-
-  if (isLoadingAuth) {
-    return <div className="min-h-screen bg-[#0f2740] flex items-center justify-center text-white">Loading secure workspace...</div>;
-  }
-
-  if (!isAuthenticated) {
-    return <AuthScreen onAuthenticated={() => setIsAuthenticated(true)} />;
-  }
 
   // Config & Survey Sync
   const handleUpdateConfig = (newConfig: SubCentreConfig) => {
