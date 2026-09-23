@@ -14,8 +14,28 @@ export const AuthScreen: React.FC<Props> = ({ onAuthenticated }) => {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [isResending, setIsResending] = useState(false);
+  const [isRecovering, setIsRecovering] = useState(false);
+  const [recoveryPassword, setRecoveryPassword] = useState('');
+  const [recoveryConfirm, setRecoveryConfirm] = useState('');
 
   const confirmationRedirect = import.meta.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL ?? `${window.location.origin}/auth/callback`;
+
+  const resetPassword = async () => {
+    if (!email.trim()) {
+      setError('आधी email address लिहा.');
+      return;
+    }
+    setIsRecovering(true);
+    setError('');
+    setMessage('');
+    const { error: resetError } = await supabase.auth.resetPasswordForEmail(email.trim(), { redirectTo: confirmationRedirect });
+    setIsRecovering(false);
+    if (resetError) {
+      setError('Password recovery email पाठवता आला नाही. Email तपासा आणि पुन्हा प्रयत्न करा.');
+      return;
+    }
+    setMessage('Password बदलण्यासाठी recovery link email वर पाठवली आहे.');
+  };
 
   const resendConfirmation = async () => {
     if (!email.trim()) {
@@ -131,9 +151,14 @@ export const AuthScreen: React.FC<Props> = ({ onAuthenticated }) => {
           {message && <p role="status" className="rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-700">{message}</p>}
 
           {mode === 'login' && (
-            <button type="button" onClick={resendConfirmation} disabled={isResending} className="w-full text-sm font-semibold text-[#1a4a72] hover:underline disabled:opacity-60">
-              {isResending ? 'पुन्हा पाठवत आहे...' : 'वेरिफिकेशन ईमेल पुन्हा पाठवा'}
-            </button>
+            <div className="space-y-2">
+              <button type="button" onClick={resetPassword} disabled={isRecovering} className="w-full text-sm font-semibold text-[#1a4a72] hover:underline disabled:opacity-60">
+                {isRecovering ? 'Recovery link पाठवत आहे...' : 'पासवर्ड विसरलात? Recovery link पाठवा'}
+              </button>
+              <button type="button" onClick={resendConfirmation} disabled={isResending} className="w-full text-sm font-semibold text-slate-600 hover:underline disabled:opacity-60">
+                {isResending ? 'पुन्हा पाठवत आहे...' : 'Confirmation email पुन्हा पाठवा'}
+              </button>
+            </div>
           )}
 
           <button disabled={isSubmitting} type="submit" className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#1a4a72] px-4 py-3 font-bold text-white transition hover:bg-[#123653] disabled:cursor-not-allowed disabled:opacity-60">
