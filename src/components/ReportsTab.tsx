@@ -322,7 +322,7 @@ export const ReportsTab: React.FC<Props> = ({
                     </span>
                   </td>
                   <td className="p-2.5 text-center font-bold text-slate-800">{survey.saltSampleSent} नमुने</td>
-                  <td className="p-2.5 text-slate-600">आयो��ीनचे प्रमाण म���नक �����िकषांप्रमाणे</td>
+                  <td className="p-2.5 text-slate-600">आयोडीनचे प्रमाण मानक निकषांप्रमाणे</td>
                 </tr>
                 <tr className="bg-emerald-50/40">
                   <td className="p-2.5 font-bold text-emerald-950">TCL (टी.सी.एल. पावडर वापर)</td>
@@ -477,7 +477,7 @@ export const ReportsTab: React.FC<Props> = ({
                 className="print:hidden inline-flex items-center gap-1 text-[11px] font-bold text-[#1a4a72] bg-blue-50 hover:bg-blue-100 px-2 py-0.5 rounded border border-blue-200 transition-colors"
               >
                 <Edit3 className="w-3 h-3 text-[#f39c12]" />
-                रुग्ण नो���दवही एडिट करा
+                रुग्ण नोंदवही एडिट करा
               </button>
             )}
           </div>
@@ -563,7 +563,7 @@ export const ReportsTab: React.FC<Props> = ({
           <div className="mt-6">
             <div className="border-b border-slate-200 pb-2 mb-3 flex items-center justify-between flex-wrap gap-2">
               <h3 className="text-sm font-bold text-[#1a4a72] uppercase tracking-wide">
-                ५. विशेष लाई���लिस्ट तपशील (TB, कुष्ठरोग व मोतीबिंदू वैयक्तिक नोंदी)
+                ५. विशेष लाईनलिस्ट तपशील (TB, कुष्ठरोग व मोतीबिंदू वैयक्तिक नोंदी)
               </h3>
               {onNavigateTab && (
                 <button

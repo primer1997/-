@@ -389,14 +389,14 @@ export const PatientEntryTab: React.FC<PatientEntryTabProps> = ({
             >
               <div className="text-[11px] font-medium opacity-80">एकूण रुग्ण</div>
               <div className="text-xl font-black mt-0.5">{totalCount}</div>
-              <div className="text-[10px] opacity-70">सर���व नोंदी</div>
+              <div className="text-[10px] opacity-70">सर्व नोंदी</div>
             </button>
 
             <button
               type="button"
               onClick={() => setDiseaseFilter(diseaseFilter === 'कॉलरा' ? 'all' : 'कॉलरा')}
               className={`text-left p-2.5 rounded-xl border transition-all cursor-pointer ${
-                diseaseFilter === '���ॉलरा'
+                diseaseFilter === 'कॉलरा'
                   ? 'bg-rose-700 text-white border-rose-700 shadow-xs'
                   : 'bg-white text-slate-700 border-rose-200 hover:border-rose-300'
               }`}
@@ -677,7 +677,7 @@ export const PatientEntryTab: React.FC<PatientEntryTabProps> = ({
                   <div className="flex items-center gap-2">
                     <UserPlus className="w-5 h-5 text-amber-400" />
                     <h3 className="font-bold text-base sm:text-lg">
-                      {editingPatient ? 'रुग्ण माहिती संपादित करा (Edit)' : 'नवीन रुग्ण नोंदण�� (New Registration)'}
+                      {editingPatient ? 'रुग्ण माहिती संपादित करा (Edit)' : 'नवीन रुग्ण नोंदणी (New Registration)'}
                     </h3>
                   </div>
                   <button

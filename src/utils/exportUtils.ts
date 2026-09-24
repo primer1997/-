@@ -199,7 +199,7 @@ export function exportToExcel(
     ['महाराष्ट्र शासन - सार्वजनिक आरोग्य विभाग | उपकेंद्र मासिक प्रगती अहवाल', '', '', ''],
     [`उपकेंद्र मासिक एकात्मिक आरोग्य प्रगती अहवाल - माहे: ${config.reportingMonth}`, '', '', ''],
     [
-      `उपकेंद्र: ${config.subCentreName} | प्रा.आ.केंद्र: ${config.phcName} | तालुका: ${config.taluka} | जिल्हा: ${config.district} | अहवा���� दिनांक: ${new Date().toLocaleDateString('mr-IN')}`,
+      `उपकेंद्र: ${config.subCentreName} | प्रा.आ.केंद्र: ${config.phcName} | तालुका: ${config.taluka} | जिल्हा: ${config.district} | अहवाल दिनांक: ${new Date().toLocaleDateString('mr-IN')}`,
       '',
       '',
       '',
@@ -247,7 +247,7 @@ export function exportToExcel(
     ['', '', '', ''],
     ['अहवाल सादरकर्ता (आरोग्य सेवक / सेविका)', '', 'तपासणी व पडताळणी (वैद्यकीय अधिकारी)', ''],
     [`${config.workerName} (${config.workerDesignation})`, '', 'वैद्यकीय अधिकारी (MBBS / BAMS)', ''],
-    [`आरोग्य उपकेंद्र ${config.subCentreName}, प्रा.आ.के. ${config.phcName}`, '', `प्राथमिक आरो���्य केंद्र ${config.phcName}, ता. ${config.taluka}`, ''],
+    [`आरोग्य उपकेंद्र ${config.subCentreName}, प्रा.आ.के. ${config.phcName}`, '', `प्राथमिक आरोग्य केंद्र ${config.phcName}, ता. ${config.taluka}`, ''],
   ];
 
   const wsSurvey = XLSX.utils.aoa_to_sheet(surveySheetData);
@@ -636,7 +636,7 @@ export function exportToExcel(
   XLSX.utils.book_append_sheet(wb, wsTb, '३_क्षयरुग्ण_लाईनलिस्ट');
 
   // =========================================================================
-  // Sheet 4: कुष्ठरुग्ण ���������नलिस्ट (Leprosy Linelist - NLEP)
+  // Sheet 4: कुष्ठरुग्ण लाईनलिस्ट (Leprosy Linelist - NLEP)
   // =========================================================================
   const leprosyHeaders = [
     'अ.क्र.',
@@ -839,7 +839,7 @@ export function exportToExcel(
 
   XLSX.utils.book_append_sheet(wb, wsCataract, '५_मोतीबिंदू_लाईनलिस्ट');
 
-  const deathHeaders = ['अ.क्र.', 'मृत्��ू द���ना���क', 'मृत व्यक्तीचे नाव', 'वय', 'लिंग', 'गाव / वस्ती', 'मृत्यू गावात/गावाबाहेर', 'मृत्यूचे ठिकाण', 'मृत्यूचे कारण', 'शेरा'];
+  const deathHeaders = ['अ.क्र.', 'मृत्यू दिनांक', 'मृत व्यक्तीचे नाव', 'वय', 'लिंग', 'गाव / वस्ती', 'मृत्यू गावात/गावाबाहेर', 'मृत्यूचे ठिकाण', 'मृत्यूचे कारण', 'शेरा'];
   const deathRows = deaths.map((record, index) => [index + 1, record.date, record.name || (record as DeathRecord & { deceasedName?: string; deceased_name?: string; personName?: string; fullName?: string }).deceasedName || (record as DeathRecord & { deceased_name?: string }).deceased_name || (record as DeathRecord & { personName?: string }).personName || (record as DeathRecord & { fullName?: string }).fullName || 'नाव उपलब्ध नाही', record.age, record.gender, record.village, record.place, record.deathPlace, record.cause, record.remarks || '']);
   const deathSheetData = [
     [`मृत्यू नोंदणी लाईनलिस्ट - ${config.reportingMonth}`, ...Array(deathHeaders.length - 1).fill('')],
