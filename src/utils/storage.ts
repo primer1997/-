@@ -101,6 +101,7 @@ export function deriveDynamicNextMonthSurvey(prev: ContainerSurveyData): Contain
     // Cataract: remaining suspects carry forward
     cataractSuspected: Math.max(0, prev.cataractSuspected - prev.cataractOperated),
     cataractOperated: 0,
+    villageMarriages: 0,
 
     notes: 'मागील महिन्याच्या आकडेवारीनुसार नवीन महिन्याचे आकडे स्वयंचलित तयार झाले.',
   };

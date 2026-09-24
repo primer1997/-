@@ -46,6 +46,7 @@ export interface ContainerSurveyData {
   // मोतीबिंदू (Cataract - NPCB)
   cataractSuspected: number; // संशयित मोतीबिंदू
   cataractOperated: number; // ऑपरेशन झालेले मोतीबिंदू
+  villageMarriages: number; // गावात झालेली एकूण लग्ने
 
   notes?: string;
 }

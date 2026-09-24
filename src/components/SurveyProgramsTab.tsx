@@ -310,7 +310,7 @@ export const SurveyProgramsTab: React.FC<Props> = ({ survey, onUpdateSurvey }) =
             </div>
             <div className="text-[11px] text-slate-600 mb-1">प्रयोगशाळेस पाठवले की नाही</div>
             <div className="flex items-center justify-between gap-2 mt-2">
-              <span className="text-xs font-medium text-slate-700">पाठवलेले नमुने:</span>
+              <span className="text-xs font-medium text-slate-700">पाठवलेले नमु���े:</span>
               <div className="w-28">
                 <NumberInput
                   value={survey.waterChemSent}
@@ -418,9 +418,23 @@ export const SurveyProgramsTab: React.FC<Props> = ({ survey, onUpdateSurvey }) =
               </span>
             </div>
 
-            <div className="space-y-2.5">
-              <div className="flex items-center justify-between bg-white p-2 rounded-lg border border-slate-200">
-                <span className="text-xs text-slate-700 font-medium">एकूण क्षयरुग्ण संख्या:</span>
+      <div className="space-y-2.5">
+        <div className="flex items-center justify-between bg-white p-2 rounded-lg border border-amber-200">
+          <span className="text-xs text-slate-700 font-medium">गावात झालेली एकूण लग्ने:</span>
+          <div className="w-28">
+            <NumberInput
+              value={survey.villageMarriages}
+              onChange={(val) => handleFieldChange('villageMarriages', val)}
+              showStepButtons={true}
+              step={1}
+              className="w-full text-center font-bold text-sm text-amber-700 bg-amber-50 border border-amber-300 rounded py-0.5 outline-none focus:ring-1 focus:ring-amber-500"
+              min={0}
+            />
+          </div>
+        </div>
+
+        <div className="flex items-center justify-between bg-white p-2 rounded-lg border border-slate-200">
+          <span className="text-xs text-slate-700 font-medium">एकूण क्षयरुग्ण संख्या:</span>
                 <div className="w-28">
                   <NumberInput
                     value={survey.tbTotal}
@@ -692,8 +706,17 @@ export const SurveyProgramsTab: React.FC<Props> = ({ survey, onUpdateSurvey }) =
               <div>
                 <h4 className="font-bold text-xs text-[#1a4a72] mb-2 uppercase">३. TB, कुष्ठरोग व मोतीबिंदू</h4>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                  <div>
-                    <label className="text-[11px] font-semibold text-slate-600 block mb-1">एकूण क्षयरुग्ण संख्या</label>
+      <div>
+        <label className="text-[11px] font-semibold text-amber-700 block mb-1">गावात झालेली एकूण लग्ने</label>
+        <NumberInput
+          value={bulkData.villageMarriages}
+          onChange={(val) => setBulkData({ ...bulkData, villageMarriages: val })}
+          className="w-full px-2 py-1 text-xs border border-amber-300 rounded"
+          min={0}
+        />
+      </div>
+      <div>
+        <label className="text-[11px] font-semibold text-slate-600 block mb-1">एकूण क्षयरुग्ण संख्या</label>
                     <NumberInput
                       value={bulkData.tbTotal}
                       onChange={(val) => setBulkData({ ...bulkData, tbTotal: val })}
