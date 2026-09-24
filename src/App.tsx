@@ -26,6 +26,10 @@ import {
   loadDeaths,
   saveDeaths,
   resetAllData,
+  loadCloudAppData,
+  saveCloudAppData,
+  loadMonthlySurveys,
+  CloudAppData,
 } from './utils/storage';
 import {
   parseReportingMonth,
@@ -102,6 +106,42 @@ function Workspace() {
   const [leprosyPatients, setLeprosyPatients] = useState<LeprosyPatientRecord[]>(() => loadLeprosyPatients());
   const [cataractPatients, setCataractPatients] = useState<CataractPatientRecord[]>(() => loadCataractPatients());
   const [deaths, setDeaths] = useState<DeathRecord[]>(() => loadDeaths());
+  const [cloudReady, setCloudReady] = useState(false);
+
+  const cloudPayload = (): CloudAppData => ({
+    config,
+    survey,
+    monthlySurveys: loadMonthlySurveys(),
+    patients,
+    tbPatients,
+    leprosyPatients,
+    cataractPatients,
+    deaths,
+  });
+
+  useEffect(() => {
+    let mounted = true;
+    loadCloudAppData().then((remote) => {
+      if (!mounted) return;
+      if (remote) {
+        setConfig(remote.config);
+        setSurvey(remote.survey);
+        setPatients(remote.patients);
+        setTbPatients(remote.tbPatients);
+        setLeprosyPatients(remote.leprosyPatients);
+        setCataractPatients(remote.cataractPatients);
+        setDeaths(remote.deaths);
+      } else {
+        void saveCloudAppData(cloudPayload());
+      }
+      setCloudReady(true);
+    }).catch((error) => console.error('[v0] Cloud data load failed:', error));
+    return () => { mounted = false; };
+  }, []);
+
+  useEffect(() => {
+    if (cloudReady) void saveCloudAppData(cloudPayload()).catch((error) => console.error('[v0] Cloud data save failed:', error));
+  }, [cloudReady, config, survey, patients, tbPatients, leprosyPatients, cataractPatients, deaths]);
 
   const [activeTab, setActiveTab] = useState<'survey' | 'entry' | 'report'>('survey');
 

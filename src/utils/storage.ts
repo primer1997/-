@@ -1,3 +1,4 @@
+import { supabase } from '../lib/supabase';
 import {
   SubCentreConfig,
   ContainerSurveyData,
@@ -25,6 +26,32 @@ const TB_PATIENTS_KEY = 'arogya_sevak_tb_patients_v1';
 const LEPROSY_PATIENTS_KEY = 'arogya_sevak_leprosy_patients_v1';
 const CATARACT_PATIENTS_KEY = 'arogya_sevak_cataract_patients_v1';
 const DEATHS_KEY = 'arogya_sevak_deaths_v1';
+
+export interface CloudAppData {
+  config: SubCentreConfig;
+  survey: ContainerSurveyData;
+  monthlySurveys: Record<string, ContainerSurveyData>;
+  patients: PatientRecord[];
+  tbPatients: TbPatientRecord[];
+  leprosyPatients: LeprosyPatientRecord[];
+  cataractPatients: CataractPatientRecord[];
+  deaths: DeathRecord[];
+}
+
+export async function loadCloudAppData(): Promise<CloudAppData | null> {
+  const { data: userData } = await supabase.auth.getUser();
+  if (!userData.user) return null;
+  const { data, error } = await supabase.from('user_app_data').select('data').eq('user_id', userData.user.id).maybeSingle();
+  if (error) throw error;
+  return (data?.data as CloudAppData | undefined) ?? null;
+}
+
+export async function saveCloudAppData(payload: CloudAppData) {
+  const { data: userData } = await supabase.auth.getUser();
+  if (!userData.user) return;
+  const { error } = await supabase.from('user_app_data').upsert({ user_id: userData.user.id, data: payload, updated_at: new Date().toISOString() });
+  if (error) throw error;
+}
 
 export function loadConfig(): SubCentreConfig {
   try {
