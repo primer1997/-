@@ -310,7 +310,7 @@ export const SurveyProgramsTab: React.FC<Props> = ({ survey, onUpdateSurvey }) =
             </div>
             <div className="text-[11px] text-slate-600 mb-1">प्रयोगशाळेस पाठवले की नाही</div>
             <div className="flex items-center justify-between gap-2 mt-2">
-              <span className="text-xs font-medium text-slate-700">पाठवलेले नमु�������े:</span>
+              <span className="text-xs font-medium text-slate-700">पाठवलेले नमुने:</span>
               <div className="w-28">
                 <NumberInput
                   value={survey.waterChemSent}
