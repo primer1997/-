@@ -310,7 +310,7 @@ export const SurveyProgramsTab: React.FC<Props> = ({ survey, onUpdateSurvey }) =
             </div>
             <div className="text-[11px] text-slate-600 mb-1">प्रयोगशाळेस पाठवले की नाही</div>
             <div className="flex items-center justify-between gap-2 mt-2">
-              <span className="text-xs font-medium text-slate-700">पाठवलेले नमु�����े:</span>
+              <span className="text-xs font-medium text-slate-700">पाठवलेले नमु�������े:</span>
               <div className="w-28">
                 <NumberInput
                   value={survey.waterChemSent}
@@ -399,6 +399,30 @@ export const SurveyProgramsTab: React.FC<Props> = ({ survey, onUpdateSurvey }) =
               showStepButtons={true}
               step={1}
               className="w-full text-center font-bold text-sm text-amber-700 bg-white border border-amber-300 rounded py-1 outline-none focus:ring-1 focus:ring-amber-500"
+              min={0}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Blood sample statistics */}
+      <div className="bg-white rounded-2xl shadow-sm border border-rose-200/80 p-4 sm:p-6">
+        <div className="pb-3 border-b border-rose-100 mb-4 flex items-center justify-between gap-2">
+          <div>
+            <h3 className="text-sm sm:text-base font-bold text-rose-800">रक्त तपासणी आकडेवारी</h3>
+            <p className="text-xs text-slate-500">गावात घेतलेल्या रक्तनमुन्यांची एकूण संख्या</p>
+          </div>
+          <span className="text-xs font-bold rounded-full bg-rose-100 text-rose-800 px-3 py-1">रक्तनमुने</span>
+        </div>
+        <div className="flex items-center justify-between bg-rose-50/60 p-3 rounded-xl border border-rose-200">
+          <span className="text-sm text-slate-700 font-semibold">एकूण घेतलेले रक्तनमुने</span>
+          <div className="w-28">
+            <NumberInput
+              value={survey.bloodSamplesTaken}
+              onChange={(val) => handleFieldChange('bloodSamplesTaken', val)}
+              showStepButtons={true}
+              step={1}
+              className="w-full text-center font-bold text-sm text-rose-700 bg-white border border-rose-300 rounded py-1 outline-none focus:ring-1 focus:ring-rose-500"
               min={0}
             />
           </div>

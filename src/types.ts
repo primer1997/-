@@ -47,6 +47,7 @@ export interface ContainerSurveyData {
   cataractSuspected: number; // संशयित मोतीबिंदू
   cataractOperated: number; // ऑपरेशन झालेले मोतीबिंदू
   villageMarriages: number; // गावात झालेली एकूण लग्ने
+  bloodSamplesTaken: number; // घेतलेले एकूण रक्तनमुने
 
   notes?: string;
 }
