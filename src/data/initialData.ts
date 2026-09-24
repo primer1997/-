@@ -52,6 +52,8 @@ export const initialSurveyData: ContainerSurveyData = {
   // मोतीबिंदू (Cataract)
   cataractSuspected: 14,
   cataractOperated: 6,
+  villageMarriages: 0,
+  bloodSamplesTaken: 0,
 
   notes: 'पाणी नमुने व मीठ नमुने प्रयोगशाळेस पाठवले. विहिरी व जलस्रोतांचे TCL क्लोरीनेशन नियमित केले.',
 };
@@ -84,6 +86,8 @@ export const initialJulySurveyData: ContainerSurveyData = {
 
   cataractSuspected: 18,
   cataractOperated: 4,
+  villageMarriages: 0,
+  bloodSamplesTaken: 0,
 
   notes: 'जुलै २०२६ सर्वेक्षण अहवाल पूर्ण.',
 };

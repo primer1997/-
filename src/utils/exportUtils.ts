@@ -233,7 +233,7 @@ export function exportToExcel(
     ['कॉलरा (Cholera)', choleraCases, choleraCases > 0 ? 'तात्काळ TCL केले' : 'निरंक', choleraCases > 0 ? 'अतिदक्षता नियंत्रण' : 'निरंक'],
     ['गॅस्ट्रो (Gastro)', gastroCases, gastroCases > 0 ? 'TCL केले' : 'निरंक', gastroCases > 0 ? 'उपचार सुरू' : 'निरंक'],
     ['अतिसार (Diarrhea)', diarrheaCases, diarrheaCases > 0 ? 'TCL केले' : 'निरंक', diarrheaCases > 0 ? 'उपचार सुरू' : 'निरंक'],
-    ['हगवण (Dysentery)', dysenteryCases, dysenteryCases > 0 ? 'TCL केले' : 'निरंक', dysenteryCases > 0 ? 'उपचार सुरू' : 'निरंक'],
+    ['��गवण (Dysentery)', dysenteryCases, dysenteryCases > 0 ? 'TCL केले' : 'निरंक', dysenteryCases > 0 ? 'उपचार सुरू' : 'निरंक'],
     ['मेंदुज्वर (Encephalitis)', encephalitisCases, encephalitisCases > 0 ? 'TCL केले' : 'निरंक', encephalitisCases > 0 ? 'तात्काळ संदर्भ' : 'निरंक'],
     ['सांधेदुखी (Joint Pain)', jointPainCases, jointPainCases > 0 ? 'TCL केले' : 'निरंक', jointPainCases > 0 ? 'उपचार सुरू' : 'निरंक'],
     ['मलेरिया व डेंग्यू (Malaria / Dengue)', `${malariaCases} / ${dengueCases}`, 'रक्त नमुने तपासणी', 'कीटक नियंत्रण सुरू'],
@@ -244,6 +244,8 @@ export function exportToExcel(
     ['क्षयरोग निर्मूलन (TB - NTEP)', survey.tbSuspected, `उपचाराखालील: ${survey.tbUnderTreatment}`, 'पहा पत्रक: ३_क्षयरुग्ण_लाईनलिस्ट'],
     ['कुष्ठरोग निर्मूलन (Leprosy - NLEP)', survey.leprosySuspected, `उपचाराखालील: ${survey.leprosyUnderTreatment}`, 'पहा पत्रक: ४_कुष्ठरुग्ण_लाईनलिस्ट'],
     ['अंधत्व नियंत्रण (Cataract - NPCB)', survey.cataractSuspected, `शस्त्रक्रिया पूर्ण: ${survey.cataractOperated}`, 'पहा पत्रक: ५_मोतीबिंदू_लाईनलिस्ट'],
+    ['गावातील सामाजिक आकडेवारी', survey.villageMarriages, 'गावात झालेली एकूण लग्ने', 'नवीन नोंद'],
+    ['रक्त तपासणी आकडेवारी', survey.bloodSamplesTaken, 'एकूण घेतलेले रक्तनमुने', 'नवीन नोंद'],
     ['', '', '', ''],
     ['अहवाल सादरकर्ता (आरोग्य सेवक / सेविका)', '', 'तपासणी व पडताळणी (वैद्यकीय अधिकारी)', ''],
     [`${config.workerName} (${config.workerDesignation})`, '', 'वैद्यकीय अधिकारी (MBBS / BAMS)', ''],
@@ -1123,6 +1125,12 @@ export function generateWhatsAppSummary(
 - तपासलेली भांडी: ${survey.inspCont} | दूषित भांडी: ${survey.posCont}
 - *HI:* ${indices.hi}% | *CI:* ${indices.ci}% | *BI:* ${indices.bi}
 - *जोखीम पातळी:* ${indices.riskLevel}
+
+💍 *गावातील सामाजिक आकडेवारी:*
+- गावात झालेली एकूण लग्ने: *${survey.villageMarriages}*
+
+🩸 *रक्त तपासणी आकडेवारी:*
+- एकूण घेतलेले रक्तनमुने: *${survey.bloodSamplesTaken}*
 
 💧 *पाणी, मीठ व TCL तपासणी:*
 - पाणी जैविक पाठवले: *${survey.waterBioSentStatus}* (${survey.waterBioSent} नमुने)

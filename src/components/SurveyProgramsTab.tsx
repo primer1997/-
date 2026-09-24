@@ -381,6 +381,54 @@ export const SurveyProgramsTab: React.FC<Props> = ({ survey, onUpdateSurvey }) =
         </div>
       </div>
 
+      {/* Village marriage statistics */}
+      <div className="bg-white rounded-2xl shadow-sm border border-amber-200/80 p-4 sm:p-6">
+        <div className="pb-3 border-b border-amber-100 mb-4 flex items-center justify-between gap-2">
+          <div>
+            <h3 className="text-sm sm:text-base font-bold text-amber-800">गावातील सामाजिक आकडेवारी</h3>
+            <p className="text-xs text-slate-500">गावात झालेल्या लग्नांची एकूण संख्या</p>
+          </div>
+          <span className="text-xs font-bold rounded-full bg-amber-100 text-amber-800 px-3 py-1">लग्न नोंद</span>
+        </div>
+        <div className="flex items-center justify-between bg-amber-50/60 p-3 rounded-xl border border-amber-200">
+          <span className="text-sm text-slate-700 font-semibold">गावात झालेली एकूण लग्ने</span>
+          <div className="w-28">
+            <NumberInput
+              value={survey.villageMarriages}
+              onChange={(val) => handleFieldChange('villageMarriages', val)}
+              showStepButtons={true}
+              step={1}
+              className="w-full text-center font-bold text-sm text-amber-700 bg-white border border-amber-300 rounded py-1 outline-none focus:ring-1 focus:ring-amber-500"
+              min={0}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Blood sample statistics */}
+      <div className="bg-white rounded-2xl shadow-sm border border-rose-200/80 p-4 sm:p-6">
+        <div className="pb-3 border-b border-rose-100 mb-4 flex items-center justify-between gap-2">
+          <div>
+            <h3 className="text-sm sm:text-base font-bold text-rose-800">रक्त तपासणी आकडेवारी</h3>
+            <p className="text-xs text-slate-500">गावात घेतलेल्या रक्तनमुन्यांची एकूण संख्या</p>
+          </div>
+          <span className="text-xs font-bold rounded-full bg-rose-100 text-rose-800 px-3 py-1">रक्तनमुने</span>
+        </div>
+        <div className="flex items-center justify-between bg-rose-50/60 p-3 rounded-xl border border-rose-200">
+          <span className="text-sm text-slate-700 font-semibold">एकूण घेतलेले रक्तनमुने</span>
+          <div className="w-28">
+            <NumberInput
+              value={survey.bloodSamplesTaken}
+              onChange={(val) => handleFieldChange('bloodSamplesTaken', val)}
+              showStepButtons={true}
+              step={1}
+              className="w-full text-center font-bold text-sm text-rose-700 bg-white border border-rose-300 rounded py-1 outline-none focus:ring-1 focus:ring-rose-500"
+              min={0}
+            />
+          </div>
+        </div>
+      </div>
+
       {/* 3. NATIONAL HEALTH PROGRAMS (TB, LEPROSY, CATARACT) */}
       <div className="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-4 sm:p-6">
         <div className="pb-3 border-b border-slate-100 mb-4 flex items-center justify-between flex-wrap gap-2">
@@ -418,9 +466,9 @@ export const SurveyProgramsTab: React.FC<Props> = ({ survey, onUpdateSurvey }) =
               </span>
             </div>
 
-            <div className="space-y-2.5">
-              <div className="flex items-center justify-between bg-white p-2 rounded-lg border border-slate-200">
-                <span className="text-xs text-slate-700 font-medium">एकूण क्षयरुग्ण संख्या:</span>
+      <div className="space-y-2.5">
+        <div className="flex items-center justify-between bg-white p-2 rounded-lg border border-slate-200">
+          <span className="text-xs text-slate-700 font-medium">एकूण क्षयरुग्ण संख्या:</span>
                 <div className="w-28">
                   <NumberInput
                     value={survey.tbTotal}
@@ -692,8 +740,17 @@ export const SurveyProgramsTab: React.FC<Props> = ({ survey, onUpdateSurvey }) =
               <div>
                 <h4 className="font-bold text-xs text-[#1a4a72] mb-2 uppercase">३. TB, कुष्ठरोग व मोतीबिंदू</h4>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                  <div>
-                    <label className="text-[11px] font-semibold text-slate-600 block mb-1">एकूण क्षयरुग्ण संख्या</label>
+      <div>
+        <label className="text-[11px] font-semibold text-amber-700 block mb-1">गावात झालेली एकूण लग्ने</label>
+        <NumberInput
+          value={bulkData.villageMarriages}
+          onChange={(val) => setBulkData({ ...bulkData, villageMarriages: val })}
+          className="w-full px-2 py-1 text-xs border border-amber-300 rounded"
+          min={0}
+        />
+      </div>
+      <div>
+        <label className="text-[11px] font-semibold text-slate-600 block mb-1">एकूण क्षयरुग्ण संख्या</label>
                     <NumberInput
                       value={bulkData.tbTotal}
                       onChange={(val) => setBulkData({ ...bulkData, tbTotal: val })}

@@ -58,7 +58,7 @@ export function ConfirmDeleteModal({
             )}
 
             <div className="mt-2 text-[11px] text-rose-600 font-medium">
-              ⚠️ सूचना: ही नोंद डेटाबेसमधून कायमची हटवली जाईल व पूर्ववत करता येणार नाही.
+              सूचना: ही नोंद डेटाबेसमधून कायमची हटवली जाईल व पूर्ववत करता येणार नाही.
             </div>
           </div>
         </div>

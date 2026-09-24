@@ -322,7 +322,7 @@ export const ReportsTab: React.FC<Props> = ({
                     </span>
                   </td>
                   <td className="p-2.5 text-center font-bold text-slate-800">{survey.saltSampleSent} नमुने</td>
-                  <td className="p-2.5 text-slate-600">आयोडीनचे प्रमाण मानक निकषांप्रमाणे</td>
+                  <td className="p-2.5 text-slate-600">आयोडीनचे प्रमाण मा��क निकषांप्रमाणे</td>
                 </tr>
                 <tr className="bg-emerald-50/40">
                   <td className="p-2.5 font-bold text-emerald-950">TCL (टी.सी.एल. पावडर वापर)</td>
@@ -445,6 +445,17 @@ export const ReportsTab: React.FC<Props> = ({
                 <div className="flex justify-between"><span className="text-slate-600">गावातील मृत्यू:</span><span className="font-bold text-slate-900">{deaths.filter((death) => death.place === 'गावात').length}</span></div>
                 <div className="flex justify-between"><span className="text-slate-600">गावाबाहेरील मृत्यू:</span><span className="font-bold text-slate-900">{deaths.filter((death) => death.place === 'गावाबाहेर').length}</span></div>
               </div>
+            </div>
+          </div>
+
+          <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="rounded-xl border border-amber-200 bg-amber-50 p-3">
+              <div className="text-xs font-bold text-amber-800">गावातील सामाजिक आकडेवारी</div>
+              <div className="mt-1 text-sm font-semibold text-slate-700">गावात झालेली एकूण लग्ने: <span className="text-lg text-amber-700">{survey.villageMarriages}</span></div>
+            </div>
+            <div className="rounded-xl border border-rose-200 bg-rose-50 p-3">
+              <div className="text-xs font-bold text-rose-800">रक्त तपासणी आकडेवारी</div>
+              <div className="mt-1 text-sm font-semibold text-slate-700">एकूण घेतलेले रक्तनमुने: <span className="text-lg text-rose-700">{survey.bloodSamplesTaken}</span></div>
             </div>
           </div>
 
