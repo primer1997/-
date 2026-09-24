@@ -310,7 +310,7 @@ export const SurveyProgramsTab: React.FC<Props> = ({ survey, onUpdateSurvey }) =
             </div>
             <div className="text-[11px] text-slate-600 mb-1">प्रयोगशाळेस पाठवले की नाही</div>
             <div className="flex items-center justify-between gap-2 mt-2">
-              <span className="text-xs font-medium text-slate-700">पाठवलेले नमु���े:</span>
+              <span className="text-xs font-medium text-slate-700">पाठवलेले नमु�����े:</span>
               <div className="w-28">
                 <NumberInput
                   value={survey.waterChemSent}
@@ -381,6 +381,30 @@ export const SurveyProgramsTab: React.FC<Props> = ({ survey, onUpdateSurvey }) =
         </div>
       </div>
 
+      {/* Village marriage statistics */}
+      <div className="bg-white rounded-2xl shadow-sm border border-amber-200/80 p-4 sm:p-6">
+        <div className="pb-3 border-b border-amber-100 mb-4 flex items-center justify-between gap-2">
+          <div>
+            <h3 className="text-sm sm:text-base font-bold text-amber-800">गावातील सामाजिक आकडेवारी</h3>
+            <p className="text-xs text-slate-500">गावात झालेल्या लग्नांची एकूण संख्या</p>
+          </div>
+          <span className="text-xs font-bold rounded-full bg-amber-100 text-amber-800 px-3 py-1">लग्न नोंद</span>
+        </div>
+        <div className="flex items-center justify-between bg-amber-50/60 p-3 rounded-xl border border-amber-200">
+          <span className="text-sm text-slate-700 font-semibold">गावात झालेली एकूण लग्ने</span>
+          <div className="w-28">
+            <NumberInput
+              value={survey.villageMarriages}
+              onChange={(val) => handleFieldChange('villageMarriages', val)}
+              showStepButtons={true}
+              step={1}
+              className="w-full text-center font-bold text-sm text-amber-700 bg-white border border-amber-300 rounded py-1 outline-none focus:ring-1 focus:ring-amber-500"
+              min={0}
+            />
+          </div>
+        </div>
+      </div>
+
       {/* 3. NATIONAL HEALTH PROGRAMS (TB, LEPROSY, CATARACT) */}
       <div className="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-4 sm:p-6">
         <div className="pb-3 border-b border-slate-100 mb-4 flex items-center justify-between flex-wrap gap-2">
@@ -419,20 +443,6 @@ export const SurveyProgramsTab: React.FC<Props> = ({ survey, onUpdateSurvey }) =
             </div>
 
       <div className="space-y-2.5">
-        <div className="flex items-center justify-between bg-white p-2 rounded-lg border border-amber-200">
-          <span className="text-xs text-slate-700 font-medium">गावात झालेली एकूण लग्ने:</span>
-          <div className="w-28">
-            <NumberInput
-              value={survey.villageMarriages}
-              onChange={(val) => handleFieldChange('villageMarriages', val)}
-              showStepButtons={true}
-              step={1}
-              className="w-full text-center font-bold text-sm text-amber-700 bg-amber-50 border border-amber-300 rounded py-0.5 outline-none focus:ring-1 focus:ring-amber-500"
-              min={0}
-            />
-          </div>
-        </div>
-
         <div className="flex items-center justify-between bg-white p-2 rounded-lg border border-slate-200">
           <span className="text-xs text-slate-700 font-medium">एकूण क्षयरुग्ण संख्या:</span>
                 <div className="w-28">
